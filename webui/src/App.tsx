@@ -5,7 +5,7 @@ export function App() {
 
   const onPing = async () => {
     const res = await window.api.ping();
-    setResult(`${res.message} @ ${new Date(res.time).toLocaleTimeString()}`);
+    setResult(`${res} `);
   };
 
   return (

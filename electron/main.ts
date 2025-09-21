@@ -1,10 +1,20 @@
 import { app, BrowserWindow, ipcMain } from "electron";
-import { join } from "node:path";
+import path, { join } from "node:path";
 
 const isDev = process.env.NODE_ENV !== "production";
 const DEV_SERVER = process.env.DEV_SERVER || "http://localhost:3000";
 
 let win: BrowserWindow | null = null;
+
+function resolveHtmlPath(htmlFileName: string) {
+  if (process.env.NODE_ENV === "development") {
+    const port = process.env.PORT || 3000;
+    const url = new URL(`http://localhost:${port}`);
+    url.pathname = htmlFileName;
+    return url.href;
+  }
+  return `file://${path.resolve(__dirname, "../renderer/", htmlFileName)}`;
+}
 
 async function createWindow() {
   win = new BrowserWindow({
@@ -15,15 +25,14 @@ async function createWindow() {
       contextIsolation: true,
       nodeIntegration: false,
       sandbox: true,
-      preload: join(__dirname, "preload.js"),
+      preload: join(__dirname, "preload.cjs"),
     },
   });
 
   if (isDev) {
     await win.loadURL(DEV_SERVER);
   } else {
-    const indexHtml = join(process.cwd(), "dist", "webui", "index.html");
-    await win.loadFile(indexHtml);
+    await win.loadFile(resolveHtmlPath("index.html"));
   }
 
   win.on("closed", () => (win = null));

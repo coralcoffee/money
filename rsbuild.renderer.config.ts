@@ -3,17 +3,13 @@ import { pluginReact } from "@rsbuild/plugin-react";
 
 export default defineConfig({
   plugins: [pluginReact()],
-  html: {
-    template: "./src/renderer/index.html",
-  },
   source: {
-    entry: { index: "./src/renderer/main.tsx" },
-    define: {
-      __DEV__: process.env.NODE_ENV !== "production",
-    },
+    alias: { "@": "./renderer/src" },
+    entry: { index: "./renderer/src/main.tsx" },
   },
+  html: { template: "./renderer/index.html" },
+  server: { port: 3000 },
   output: {
     distPath: { root: "dist/renderer" },
-    assetPrefix: "/",
   },
 });

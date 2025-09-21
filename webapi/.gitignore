@@ -1,0 +1,41 @@
+# Ignore build output
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# VS Code settings
+.vscode/
+
+# Visual Studio settings
+.vs/
+
+# NuGet packages
+*.nupkg
+packages/
+
+# Resharper
+_ReSharper*/
+*.DotSettings
+
+# ASP.NET publish output
+wwwroot/
+
+# Logs
+*.log
+
+# Others
+TestResults/
+*.dbmdl
+*.pdb
+*.cache
+*.config
+*.ide
+
+# OS generated files
+.DS_Store
+Thumbs.db

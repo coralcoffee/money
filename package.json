@@ -5,7 +5,7 @@
   "main": "dist/electron/main.cjs",
   "type": "module",
   "scripts": {
-    "dev:webui": "rsbuild dev -c ./webui/rsbuild.config.ts --open=false",
+    "dev:webui": "rsbuild dev -c ./webui/rsbuild.config.ts",
     "dev:main": "cross-env NODE_ENV=development rsbuild build -c ./electron/rsbuild.main.config.ts --watch",
     "dev:preload": "cross-env NODE_ENV=development rsbuild build -c ./electron/rsbuild.preload.config.ts --watch",
     "dev:app": "wait-on tcp:3000 && electronmon dist/electron/main.cjs",

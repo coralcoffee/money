@@ -13,14 +13,15 @@ function resolveHtmlPath(htmlFileName: string) {
     url.pathname = htmlFileName;
     return url.href;
   }
-  return `file://${path.resolve(__dirname, "../renderer/", htmlFileName)}`;
+  // Correctly construct the file path for production
+  return path.join(__dirname, "../webui", htmlFileName);
 }
 
 async function createWindow() {
   win = new BrowserWindow({
     width: 1024,
     height: 700,
-    autoHideMenuBar: !isDev,
+    // autoHideMenuBar: !isDev,
     webPreferences: {
       contextIsolation: true,
       nodeIntegration: false,
@@ -28,7 +29,6 @@ async function createWindow() {
       preload: join(__dirname, "preload.cjs"),
     },
   });
-
   if (isDev) {
     await win.loadURL(DEV_SERVER);
   } else {

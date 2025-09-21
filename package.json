@@ -9,13 +9,13 @@
     "dev:main": "cross-env NODE_ENV=development rsbuild build -c ./electron/rsbuild.main.config.ts --watch",
     "dev:preload": "cross-env NODE_ENV=development rsbuild build -c ./electron/rsbuild.preload.config.ts --watch",
     "dev:app": "wait-on tcp:3000 && electronmon dist/electron/main.cjs",
-    "start": "concurrently -k -r \"pnpm:dev:ui\" \"pnpm:dev:main\" \"pnpm:dev:preload\" \"pnpm:dev:app\"",
+    "start": "concurrently -k -r \"npm run dev:ui\" \"npm run dev:main\" \"npm run dev:preload\" \"npm run dev:app\"",
     "build:renderer": "cross-env NODE_ENV=production rsbuild build -c ./renderer/rsbuild.config.ts",
     "build:main": "cross-env NODE_ENV=production rsbuild build -c ./electron/rsbuild.main.config.ts",
     "build:preload": "cross-env NODE_ENV=production rsbuild build -c ./electron/rsbuild.preload.config.ts",
-    "build": "pnpm build:renderer && pnpm build:main && pnpm build:preload",
+    "build": "npm run build:renderer && npm run build:main && npm run build:preload",
     "pack": "electron-builder --dir",
-    "dist": "pnpm build && electron-builder",
+    "dist": "npm run build && electron-builder",
     "type-check": "tsc --noEmit"
   },
   "build": {

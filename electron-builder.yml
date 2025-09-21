@@ -1,15 +1,27 @@
-appId: com.coralcoffee.money
+appId: com.example.money
+productName: Money
+asar: true
 directories:
-  buildResources: static
   output: release
+  buildResources: build
 files:
-  - dist/**/*
-  - node_modules/**/*
-  - package.json
+  - "dist/**/*"
+  - "package.json"
+  - "!dist/webapi/**/*"
+  - "!**/*.map"
+  - "!**/*.ts"
+extraMetadata:
+  main: "dist/electron/main.cjs"
 mac:
-  category: public.app-category.developer-tools
+  category: public.app-category.utilities
+  target: dmg
 win:
-  target: [nsis]
+  target: 
+    - target: nsis
+      arch: 
+        - x64
 linux:
-  target: [AppImage]
-  category: Utility
+  target: AppImage
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true

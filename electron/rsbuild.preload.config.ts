@@ -5,6 +5,7 @@ export default defineConfig({
     entry: { preload: "./electron/preload.ts" },
   },
   output: {
+    cleanDistPath: false,
     distPath: { root: "dist/electron" },
     filename: { js: "[name].cjs" },
     target: "node",
@@ -13,7 +14,10 @@ export default defineConfig({
     rspack: (config) => {
       config.target = ["electron-preload"];
       if (!config.externals) config.externals = {};
-      if (typeof config.externals === 'object' && !Array.isArray(config.externals)) {
+      if (
+        typeof config.externals === "object" &&
+        !Array.isArray(config.externals)
+      ) {
         config.externals.electron = "commonjs2 electron";
       }
       if (!config.node) config.node = {};

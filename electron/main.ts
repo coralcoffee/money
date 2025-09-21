@@ -10,6 +10,7 @@ async function createWindow() {
   win = new BrowserWindow({
     width: 1024,
     height: 700,
+    autoHideMenuBar: !isDev,
     webPreferences: {
       contextIsolation: true,
       nodeIntegration: false,
@@ -20,7 +21,6 @@ async function createWindow() {
 
   if (isDev) {
     await win.loadURL(DEV_SERVER);
-    // win.webContents.openDevTools({ mode: "detach" });
   } else {
     const indexHtml = join(process.cwd(), "dist", "webui", "index.html");
     await win.loadFile(indexHtml);

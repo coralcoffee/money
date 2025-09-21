@@ -1,0 +1,67 @@
+{
+  "name": "money",
+  "version": "1.0.0",
+  "private": true,
+  "main": "dist/main/main.js",
+  "type": "module",
+  "scripts": {
+    "dev": "npm run build:main && concurrently -k -n RSBUILD,ELECTRON \"cross-env NODE_ENV=development rsbuild dev --host 127.0.0.1 --port 3000\" \"npm:dev:electron\"",
+    "dev:electron": "cross-env NODE_ENV=development DEV_SERVER_URL=http://127.0.0.1:3000 electron .",
+    "build:main": "tsc -p tsconfig.main.json",
+    "build": "cross-env NODE_ENV=production rsbuild build && node scripts/copy-after-build.mjs",
+    "pack": "npm run build && electron-builder --dir",
+    "dist": "npm run build && electron-builder",
+    "typecheck": "tsc --noEmit",
+    "render": "rsbuild dev --host 127.0.0.1 --port 3000"
+  },
+  "build": {
+    "appId": "com.coralcoffee.money",
+    "directories": {
+      "buildResources": "static",
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "extraResources": [],
+    "mac": {
+      "category": "public.app-category.developer-tools"
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "category": "Utility"
+    }
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@rsbuild/core": "^1.5.10",
+    "@rsbuild/plugin-react": "^1.4.0",
+    "@types/node": "^24.5.2",
+    "@types/react": "^19.1.13",
+    "@types/react-dom": "^19.1.9",
+    "chokidar": "^4.0.3",
+    "concurrently": "^9.2.1",
+    "cross-env": "^10.0.0",
+    "electron": "^38.1.2",
+    "electron-builder": "^26.0.12",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2",
+    "wait-on": "^9.0.1"
+  },
+  "dependencies": {
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  }
+}

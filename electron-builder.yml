@@ -1,0 +1,15 @@
+appId: com.coralcoffee.money
+directories:
+  buildResources: static
+  output: release
+files:
+  - dist/**/*
+  - node_modules/**/*
+  - package.json
+mac:
+  category: public.app-category.developer-tools
+win:
+  target: [nsis]
+linux:
+  target: [AppImage]
+  category: Utility

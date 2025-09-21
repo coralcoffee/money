@@ -4,12 +4,12 @@ import { pluginReact } from "@rsbuild/plugin-react";
 export default defineConfig({
   plugins: [pluginReact()],
   source: {
-    alias: { "@": "./renderer/src" },
-    entry: { index: "./renderer/src/main.tsx" },
+    alias: { "@": "./webui/src" },
+    entry: { index: "./webui/src/main.tsx" },
   },
-  html: { template: "./renderer/index.html" },
+  html: { template: "./webui/index.html" },
   server: { port: 3000 },
   output: {
-    distPath: { root: "dist/renderer" },
+    distPath: { root: "dist/webui" },
   },
 });

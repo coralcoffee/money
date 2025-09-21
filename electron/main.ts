@@ -22,7 +22,7 @@ async function createWindow() {
     await win.loadURL(DEV_SERVER);
     // win.webContents.openDevTools({ mode: "detach" });
   } else {
-    const indexHtml = join(process.cwd(), "dist", "renderer", "index.html");
+    const indexHtml = join(process.cwd(), "dist", "webui", "index.html");
     await win.loadFile(indexHtml);
   }
 

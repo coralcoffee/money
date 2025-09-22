@@ -5,13 +5,12 @@ import path from "path";
 export default defineConfig({
   plugins: [pluginReact()],
   source: {
-    entry: { index: "./webui/src/main.tsx" },
+    entry: { index: "./webui/src/index.tsx" },
   },
   resolve: {
     alias: { "@": "./webui/src" },
   },
   html: { template: "./webui/index.html" },
-  server: { port: 3000 },
   output: {
     distPath: {
       root: path.resolve(__dirname, "../dist/webui"),

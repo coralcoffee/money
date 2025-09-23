@@ -2,18 +2,22 @@ import { defineConfig } from "@rsbuild/core";
 
 export default defineConfig({
   source: {
-    entry: { main: "./electron/main.ts" },
+    entry: { preload: "./desktop/preload.ts" },
   },
   output: {
-    distPath: { root: "dist/electron" },
+    cleanDistPath: false,
+    distPath: { root: "dist/desktop" },
     filename: { js: "[name].cjs" },
     target: "node",
   },
   tools: {
     rspack: (config) => {
-      config.target = ["electron-main"];
+      config.target = ["electron-preload"];
       if (!config.externals) config.externals = {};
-      if (typeof config.externals === 'object' && !Array.isArray(config.externals)) {
+      if (
+        typeof config.externals === "object" &&
+        !Array.isArray(config.externals)
+      ) {
         config.externals.electron = "commonjs2 electron";
       }
       if (!config.node) config.node = {};

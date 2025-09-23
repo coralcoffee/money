@@ -8,7 +8,7 @@
     "skipLibCheck": true,
     "isolatedModules": true,
     "noEmit": true,
-    "outDir": "../dist/electron",
+    "outDir": "../dist/desktop",
     "types": ["node"]
   },
   "include": ["./**/*.ts"]

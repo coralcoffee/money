@@ -11,7 +11,7 @@ files:
   - "!**/*.map"
   - "!**/*.ts"
 extraMetadata:
-  main: "dist/electron/main.cjs"
+  main: "dist/desktop/main.cjs"
 mac:
   category: public.app-category.utilities
   target: dmg

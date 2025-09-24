@@ -1,19 +1,13 @@
-import React, { useState } from "react";
+import './App.css';
+import { ErrorBoundary } from './ErrorBoundary';
+import { Routes } from './routes';
 
-export function App() {
-  const [result, setResult] = useState<string>("");
-
-  const onPing = async () => {
-    const res = await window.api.ping();
-    setResult(`${res} `);
-  };
-
+const App = () => {
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", padding: 24 }}>
-      <h1>Electron + Rsbuild + React + TS A</h1>
-      <p>HMR from Rsbuild, secure IPC via preload.</p>
-      <button onClick={onPing}>Ping main</button>
-      <p>{result}</p>
-    </div>
+    <ErrorBoundary fallback={<h2>Oops! Something went wrong.</h2>}>
+      <Routes isAuthorized={false} />
+    </ErrorBoundary>
   );
-}
+};
+
+export default App;

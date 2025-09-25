@@ -1,14 +1,11 @@
 import AppLayout from '@/layouts/AppLayout';
-import ApiDefinition from '../features/apiDefinition/ApiDefinition';
-import Dashboard from '../features/Dashboard/Index';
 import Home from '../features/Home';
-import DashboardLayout from '../layouts/DashboardLayout';
-import MainLayout from '../layouts/MainLayout';
 import { renderRoutes } from './GenerateRoute';
+import SettingsLayout from '@/layouts/SettingsLayout';
+import GeneralSettingsPage from '@/pages/settings/GeneralSettingsPage';
 
 export interface AppRoute {
   name: string;
-  title: string;
   component?: React.ComponentType<unknown>;
   path?: string;
   routes?: AppRoute[];
@@ -20,34 +17,26 @@ export interface AppLayout {
   routes: AppRoute[];
 }
 
-export const routes: AppLayout[] = [
+const routes: AppLayout[] = [
   {
     layout: AppLayout,
     isPublic: true,
     routes: [
       {
         name: 'Home',
-        title: 'Home',
         path: '/',
         component: Home,
       },
     ],
   },
   {
-    layout: DashboardLayout,
-    isPublic: false,
+    layout: SettingsLayout,
+    isPublic: true,
     routes: [
       {
-        name: 'Dashboard',
-        title: 'Dashboard',
-        path: '/dashboard',
-        component: Dashboard,
-      },
-      {
-        name: 'apiDefinition',
-        title: 'API Definition',
-        path: '/api-definition',
-        component: ApiDefinition,
+        name: 'GeneralSettings',
+        path: '/settings/general',
+        component: GeneralSettingsPage,
       },
     ],
   },

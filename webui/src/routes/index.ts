@@ -1,3 +1,4 @@
+import AppLayout from '@/layouts/AppLayout';
 import ApiDefinition from '../features/apiDefinition/ApiDefinition';
 import Dashboard from '../features/Dashboard/Index';
 import Home from '../features/Home';
@@ -21,7 +22,7 @@ export interface AppLayout {
 
 export const routes: AppLayout[] = [
   {
-    layout: MainLayout,
+    layout: AppLayout,
     isPublic: true,
     routes: [
       {

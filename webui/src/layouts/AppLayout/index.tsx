@@ -1,7 +1,9 @@
 import { useState } from 'react';
-import { useLocation } from 'react-router';
+import { Outlet, useLocation } from 'react-router';
 import { NavigationProps, SidebarNav } from './SideBarNav';
 import { Icons } from '@/components/ui/icons';
+import { ErrorBoundary } from '@/ErrorBoundary';
+import { Toaster } from '@/components/ui/sonner';
 
 const staticNavigation: NavigationProps = {
   primary: [
@@ -49,7 +51,21 @@ const AppLayout = () => {
   return (
     <div className="bg-background flex h-screen overflow-hidden">
       <SidebarNav navigation={navigation} />
-      App Layout
+      <div className="relative flex w-full overflow-hidden">
+        <div
+          data-tauri-drag-region="true"
+          className="draggable absolute left-0 right-0 top-0 h-6 w-full"
+        >
+          <ErrorBoundary>
+            <main className="flex min-h-0 w-full flex-1 flex-col">
+              <div className="flex-1 overflow-auto">
+                <Outlet />
+              </div>
+            </main>
+          </ErrorBoundary>
+        </div>
+        <Toaster />
+      </div>
     </div>
   );
 };

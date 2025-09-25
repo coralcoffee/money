@@ -5,39 +5,39 @@ import { SidebarNav } from './SidebarNav';
 const sidebarNavItems = [
   {
     title: 'General',
-    href: 'general',
+    href: '/settings/general',
   },
   {
     title: 'Appearance',
-    href: 'appearance',
+    href: '/settings/appearance',
   },
   {
     title: 'Accounts',
-    href: 'accounts',
+    href: '/settings/accounts',
   },
   {
     title: 'Limits',
-    href: 'contribution-limits',
+    href: '/settings/contribution-limits',
   },
   {
     title: 'Goals',
-    href: 'goals',
+    href: '/settings/goals',
   },
   {
     title: 'Market Data',
-    href: 'market-data',
+    href: '/settings/market-data',
   },
   {
     title: 'Add-ons',
-    href: 'addons',
+    href: '/settings/addons',
   },
   {
     title: 'Data Export',
-    href: 'exports',
+    href: '/settings/exports',
   },
   {
     title: 'About',
-    href: 'about',
+    href: '/settings/about',
   },
 ];
 

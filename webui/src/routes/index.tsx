@@ -1,4 +1,4 @@
-import Home from '@/features/Home';
+import Home from '@/pages/home';
 import AppLayout from '@/layouts/AppLayout';
 import SettingsLayout from '@/layouts/SettingsLayout';
 import GeneralSettingsPage from '@/pages/settings/GeneralSettingsPage';

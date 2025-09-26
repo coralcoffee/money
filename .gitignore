@@ -262,3 +262,5 @@ tsconfig.node.tsbuildinfo
 
 # Database
 db/*
+App_Data/*
+/webapi/src/Money.HttpApi.Host/App_Data

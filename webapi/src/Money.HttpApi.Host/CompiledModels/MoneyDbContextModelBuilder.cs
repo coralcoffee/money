@@ -11,15 +11,15 @@ namespace Money.CompiledModels
     public partial class MoneyDbContextModel
     {
         private MoneyDbContextModel()
-            : base(skipDetectChanges: false, modelId: new Guid("7142a662-4181-41c0-bc76-437a47bfe7c0"), entityTypeCount: 1)
+            : base(skipDetectChanges: false, modelId: new Guid("03e73819-f2a4-4677-8290-8268b91fa984"), entityTypeCount: 1)
         {
         }
 
         partial void Initialize()
         {
-            var todoItem = TodoItemEntityType.Create(this);
+            var setting = SettingEntityType.Create(this);
 
-            TodoItemEntityType.CreateAnnotations(todoItem);
+            SettingEntityType.CreateAnnotations(setting);
 
             AddAnnotation("ProductVersion", "9.0.9");
         }

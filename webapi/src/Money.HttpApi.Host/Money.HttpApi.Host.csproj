@@ -5,7 +5,7 @@
 	<Nullable>enable</Nullable>
 	<ImplicitUsings>enable</ImplicitUsings>
 	<InvariantGlobalization>true</InvariantGlobalization>
-	<PublishAot>true</PublishAot>
+	<PublishAot Condition="'$(Configuration)'=='Release'">true</PublishAot>
 	<PublishTrimmed>true</PublishTrimmed>
 	<InvariantGlobalization>true</InvariantGlobalization>
 	<TieredPGO>true</TieredPGO>
@@ -18,6 +18,10 @@
 	<!-- Explicitly root the EF-generated compiled model so trimming keeps it -->
 	<TrimmerRootAssembly Include="Money" />
   </ItemGroup>
+
+  <Target Name="OptimizeEFCore" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
+	<Exec Command="dotnet ef dbcontext optimize --output-dir CompiledModels" />
+  </Target>
   
   <ItemGroup>
 	<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.9">
@@ -25,11 +29,14 @@
 	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	</PackageReference>
 	<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.9" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.9">
+	  <PrivateAssets>all</PrivateAssets>
+	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	</PackageReference>
 	<PackageReference Include="YahooFinanceApi" Version="2.3.3" />
   </ItemGroup>
-  
-  <ItemGroup>
-    <ProjectReference Include="..\Money.Domain\Money.Domain.csproj" />
-  </ItemGroup>
 
+  <ItemGroup>
+	<ProjectReference Include="..\Money.Domain\Money.Domain.csproj" />
+  </ItemGroup>
 </Project>

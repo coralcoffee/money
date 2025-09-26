@@ -27,9 +27,10 @@ var connStr = raw.Replace("{ContentRoot}", contentRoot);
 //    opt.UseSqlite(connStr);
 //    // For AOT/trimming safety, keep provider calls in code (no reflection-based loading)
 //});
-builder.Services.AddDbContext<MoneyDbContext>(opt =>
-    opt.UseSqlite(connStr, x => x.UseQuerySplittingBehavior(QuerySplittingBehavior.SingleQuery))
-        .UseModel(Money.CompiledModels.MoneyDbContextModel.Instance));
+builder.Services.AddDbContext<MoneyDbContext>(
+    opt => opt.UseSqlite(connStr, x => x.UseQuerySplittingBehavior(QuerySplittingBehavior.SingleQuery))
+        .UseModel(Money.CompiledModels.MoneyDbContextModel.Instance)
+        );
 
 var app = builder.Build();
 // Apply basic startup setup (PRAGMAs) once per process

@@ -1,0 +1,11 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\webui",
+    "\\webui\\src",
+    "\\webui\\src\\layouts",
+    "\\webui\\src\\layouts\\SettingsLayout"
+  ],
+  "SelectedNode": "\\webui\\src\\layouts\\SettingsLayout\\index.tsx",
+  "PreviewInSolutionExplorer": false
+}

@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Money.HttpApi.Host", "src\M
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Money.Domain", "src\Money.Domain\Money.Domain.csproj", "{5B86EE32-9CA2-436A-A135-6EB358AA1A7E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Money.Application", "src\Money.Application\Money.Application.csproj", "{20A79883-851F-4209-AF2B-25B95C71982B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{5B86EE32-9CA2-436A-A135-6EB358AA1A7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B86EE32-9CA2-436A-A135-6EB358AA1A7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B86EE32-9CA2-436A-A135-6EB358AA1A7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20A79883-851F-4209-AF2B-25B95C71982B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20A79883-851F-4209-AF2B-25B95C71982B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20A79883-851F-4209-AF2B-25B95C71982B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20A79883-851F-4209-AF2B-25B95C71982B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

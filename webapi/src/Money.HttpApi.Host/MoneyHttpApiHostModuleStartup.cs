@@ -26,25 +26,14 @@ public static class MoneyHttpApiHostModuleStartup
                 .UseModel(Money.CompiledModels.MoneyDbContextModel.Instance)
         );
 
-        services.AddEndpointsApiExplorer();
-
-        services.AddHealthChecks()
-             .AddDbContextCheck<MoneyDbContext>();
-        services.AddOpenApiDocument((configure, sp) =>
+        // Add routing services with regex constraint support for slim builder
+        services.AddRouting(options =>
         {
-            configure.Title = "Money Web API";
-
-            // Add JWT
-            //configure.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
-            //{
-            //    Type = OpenApiSecuritySchemeType.ApiKey,
-            //    Name = "Authorization",
-            //    In = OpenApiSecurityApiKeyLocation.Header,
-            //    Description = "Type into the textbox: Bearer {your JWT token}."
-            //});
-
-            //configure.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));
+            options.SetParameterPolicy<Microsoft.AspNetCore.Routing.Constraints.RegexInlineRouteConstraint>("regex");
         });
+
+        services.AddEndpointsApiExplorer();
+        services.AddSwaggerGen();
 
         return services;
     }

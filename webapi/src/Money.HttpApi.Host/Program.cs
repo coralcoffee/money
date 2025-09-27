@@ -25,15 +25,19 @@ await using (var scope = app.Services.CreateAsyncScope())
     await db.Database.ExecuteSqlRawAsync("PRAGMA foreign_keys=ON;");
 }
 
-app.UseHealthChecks("/health");
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-app.UseSwaggerUi(settings =>
-{
-    settings.Path = "/api";
-    settings.DocumentPath = "/api/specification.json";
-});
 
+
+app.MapGet("/hello", () => "Hello AOT!");
+
+// Map API endpoints
 app.MapEndpoints();
 
 app.Run();

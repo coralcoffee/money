@@ -15,37 +15,20 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="NewFolder\**" />
-    <Content Remove="NewFolder\**" />
-    <EmbeddedResource Remove="NewFolder\**" />
-    <None Remove="NewFolder\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-	<!-- Explicitly root the EF-generated compiled model so trimming keeps it -->
 	<TrimmerRootAssembly Include="Money" />
   </ItemGroup>
 
   <Target Name="OptimizeEFCore" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
 	<Exec Command="dotnet ef dbcontext optimize --output-dir CompiledModels" />
   </Target>
-  
+
   <ItemGroup>
 	<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.9">
 	  <PrivateAssets>all</PrivateAssets>
 	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	</PackageReference>
 	<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.9" />
-	<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.9">
-	  <PrivateAssets>all</PrivateAssets>
-	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-	</PackageReference>
-	<PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="9.0.9" />
-	<PackageReference Include="NSwag.AspNetCore" Version="14.6.0" />
-	<PackageReference Include="NSwag.MSBuild" Version="14.6.0">
-	  <PrivateAssets>all</PrivateAssets>
-	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-	</PackageReference>
+	<PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.4" />
 	<PackageReference Include="YahooFinanceApi" Version="2.3.3" />
   </ItemGroup>
 

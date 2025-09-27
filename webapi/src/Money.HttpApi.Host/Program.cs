@@ -8,7 +8,7 @@ using Money.Endpoints;
 
 var builder = WebApplication.CreateSlimBuilder(args);
 
-    builder.Services.ConfigureHttpJsonOptions(options =>
+builder.Services.ConfigureHttpJsonOptions(options =>
 {
     options.SerializerOptions.TypeInfoResolverChain.Insert(0, AppJsonSerializerContext.Default);
 });
@@ -25,17 +25,34 @@ await using (var scope = app.Services.CreateAsyncScope())
     await db.Database.ExecuteSqlRawAsync("PRAGMA foreign_keys=ON;");
 }
 
+// Configure Swagger middleware first
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Money API v1");
+    });
 }
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+// Add redirect for the openapi endpoint that Swagger UI might be looking for
+if (app.Environment.IsDevelopment())
+{
+    app.MapGet("/openapi/v1.json", async (HttpContext context) =>
+    {
+        context.Response.Redirect("/swagger/v1/swagger.json");
+    })
+    .ExcludeFromDescription();
+}
 
-app.MapGet("/hello", () => "Hello AOT!");
+// Map endpoints
+app.MapGet("/hello", () => "Hello AOT!")
+    .WithName("GetHello")
+    .WithSummary("Test endpoint")
+    .WithDescription("Simple test endpoint that returns a greeting");
 
 // Map API endpoints
 app.MapEndpoints();
@@ -48,6 +65,7 @@ namespace Money
     [JsonSerializable(typeof(FinancialSettingsDto[]))]
     [JsonSerializable(typeof(WeatherForecast))]
     [JsonSerializable(typeof(IEnumerable<WeatherForecast>))]
+    [JsonSerializable(typeof(string))]
     internal partial class AppJsonSerializerContext : JsonSerializerContext
     {
 

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Money.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
 namespace Money;
 
@@ -33,7 +34,15 @@ public static class MoneyHttpApiHostModuleStartup
         });
 
         services.AddEndpointsApiExplorer();
-        services.AddSwaggerGen();
+        services.AddSwaggerGen(c =>
+        {
+            c.SwaggerDoc("v1", new OpenApiInfo
+            {
+                Title = "Money API",
+                Version = "v1",
+                Description = "Money management API endpoints"
+            });
+        });
 
         return services;
     }

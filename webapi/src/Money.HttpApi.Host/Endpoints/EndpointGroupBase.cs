@@ -1,4 +1,4 @@
-﻿namespace Money;
+﻿namespace Money.Endpoints;
 
 public abstract class EndpointGroupBase
 {

@@ -8,14 +8,17 @@ public class WeatherForecasts : EndpointGroupBase
     {
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
     };
+    
     public override void Map(RouteGroupBuilder groupBuilder)
     {
-        //groupBuilder.RequireAuthorization();
-
-        groupBuilder.MapGet(GetWeatherForecasts);
+        groupBuilder.MapGet("/", GetWeatherForecasts)
+            .WithName("GetWeatherForecasts")
+            .WithSummary("Get weather forecasts")
+            .WithDescription("Returns a list of weather forecasts for the next 5 days")
+            .Produces<IEnumerable<WeatherForecast>>(StatusCodes.Status200OK);
     }
 
-    public  IEnumerable<WeatherForecast> GetWeatherForecasts()
+    public static IEnumerable<WeatherForecast> GetWeatherForecasts()
     {
         var rng = new Random();
 
@@ -26,8 +29,8 @@ public class WeatherForecasts : EndpointGroupBase
             Summary = Summaries[rng.Next(Summaries.Length)]
         });
     }
-
 }
+
 public class WeatherForecast
 {
     public DateTime Date { get; init; }

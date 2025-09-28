@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Money.Endpoints;
 using Money.EntityFrameworkCore;
 using System.Reflection;
+using Money.SettingManagement;
 
 namespace Money;
 
@@ -14,6 +15,7 @@ public static class MoneyHttpApiHostModuleStartup
 
         AddDatabase(services, configuration, contentRoot);
 
+        services.AddTransient<IFinancialSettingsAppService, FinancialSettingsAppService>();
         return services;
     }
 

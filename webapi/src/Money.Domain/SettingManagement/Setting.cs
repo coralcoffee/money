@@ -2,23 +2,23 @@
 
 namespace Money.SettingManagement;
 
-public class Setting 
+public sealed class Setting 
 {
-    public virtual Guid Id { get; protected set; }
+    public Guid Id { get; private set; }
 
     [NotNull]
-    public virtual string Name { get; protected set; } = null!;
+    public string Name { get; private set; } = null!;
 
     [NotNull]
-    public virtual string Value { get; internal set; } = null!;
+    public string Value { get; private set; } = null!;
 
     [CanBeNull]
-    public virtual string? ProviderName { get; protected set; }
+    public string? ProviderName { get; private set; }
 
     [CanBeNull]
-    public virtual string? ProviderKey { get; protected set; }
+    public string? ProviderKey { get; private set; }
 
-    protected Setting()
+    private Setting()
     {
 
     }

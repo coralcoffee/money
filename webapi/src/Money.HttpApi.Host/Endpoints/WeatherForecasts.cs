@@ -4,10 +4,12 @@ namespace Money.Endpoints;
     
 public class WeatherForecasts : EndpointGroupBase
 {
-    private static readonly string[] Summaries = new[]
-    {
+    public override string? GroupName => "WeatherForecasts";
+
+    private static readonly string[] Summaries =
+    [
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
+    ];
     
     public override void Map(RouteGroupBuilder groupBuilder)
     {

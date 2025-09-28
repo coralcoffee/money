@@ -3,3 +3,7 @@
 GET {{Money.HttpApi.Host_HostAddress}}/
 
 ###
+
+GET {{Money.HttpApi.Host_HostAddress}}/api/WeatherForecasts
+
+###

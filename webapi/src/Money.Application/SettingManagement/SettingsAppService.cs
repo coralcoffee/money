@@ -7,12 +7,18 @@ public class SettingsAppService : ISettingsAppService
     {
         return Task.FromResult(new SettingsDto
         {
-            BaseCurrency = "CAD"
+            Theme = "light",
+            Font = "font-sans", 
+            BaseCurrency = "USD",
+            OnboardingCompleted = false,
+            AutoUpdateCheckEnabled = true,
+            MenuBarVisible = true
         });
     }
 
     public Task UpdateAsync(SettingsDto input)
     {
-        throw new NotImplementedException();
+        // TODO: Implement actual update logic with persistence
+        return Task.CompletedTask;
     }
 }

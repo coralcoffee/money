@@ -1,4 +1,5 @@
 import { Settings, SettingsContextType } from "@/types/settings";
+import { useSettings } from "@/hooks/useSettings";
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 
 interface ExtendedSettingsContextType extends SettingsContextType {
@@ -10,19 +11,23 @@ interface ExtendedSettingsContextType extends SettingsContextType {
       >
     >,
   ) => Promise<void>;
+  isUpdating: boolean;
 }
 
 export function SettingsProvider({ children }: { children: ReactNode }) {
-  const { data, isLoading, isError } = useSettings();
-  const [settings, setSettings] = useState<Settings | null>(null);
+  const { 
+    settings, 
+    isLoading, 
+    isError, 
+    updateBaseCurrency: updateBaseCurrencyMutation,
+    updateSettings: updateSettingsMutation,
+    isUpdating
+  } = useSettings();
+  
   const [accountsGrouped, setAccountsGrouped] = useState(true);
 
-  const updateMutation = useSettingsMutation(setSettings, applySettingsToDocument);
-
-
   const updateBaseCurrency = async (baseCurrency: Settings['baseCurrency']) => {
-    if (!settings) throw new Error('Settings not loaded');
-    await updateMutation.mutateAsync({ ...settings, baseCurrency });
+    await updateBaseCurrencyMutation(baseCurrency);
   };
 
   // Batch update function
@@ -34,25 +39,24 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
       >
     >,
   ) => {
-    if (!settings) throw new Error('Settings not loaded');
-    await updateMutation.mutateAsync({ ...settings, ...updates });
+    await updateSettingsMutation(updates);
   };
 
   useEffect(() => {
-    if (data) {
-      setSettings(data);
-      applySettingsToDocument(data);
+    if (settings) {
+      applySettingsToDocument(settings);
     }
-  }, [data]);
+  }, [settings]);
 
   const contextValue: ExtendedSettingsContextType = {
-    settings,
+    settings: settings ?? null,
     isLoading,
     isError,
     updateBaseCurrency,
     updateSettings,
     accountsGrouped,
     setAccountsGrouped,
+    isUpdating,
   };
 
   return <SettingsContext.Provider value={contextValue}>{children}</SettingsContext.Provider>;

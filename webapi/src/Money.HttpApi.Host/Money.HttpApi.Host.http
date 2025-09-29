@@ -4,6 +4,6 @@ GET {{Money.HttpApi.Host_HostAddress}}/
 
 ###
 
-GET {{Money.HttpApi.Host_HostAddress}}/api/FinancialSettings
+GET {{Money.HttpApi.Host_HostAddress}}/api/Settings
 
 ###

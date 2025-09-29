@@ -15,7 +15,7 @@ public static class MoneyHttpApiHostModuleStartup
 
         AddDatabase(services, configuration, contentRoot);
 
-        services.AddTransient<IFinancialSettingsAppService, FinancialSettingsAppService>();
+        services.AddTransient<ISettingsAppService, SettingsAppService>();
         return services;
     }
 

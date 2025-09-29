@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Money.SettingManagement;
+using Money.EntityFrameworkCore;
 
-namespace Money.EntityFrameworkCore;
+namespace Money.SettingManagement;
 
 public class SettingRepository(IDbContextProvider<MoneyDbContext> dbContextProvider) : ISettingRepository
 {

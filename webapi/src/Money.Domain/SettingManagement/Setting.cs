@@ -1,8 +1,9 @@
 ﻿using JetBrains.Annotations;
+using Money.Domain.Entities;
 
 namespace Money.SettingManagement;
 
-public sealed class Setting 
+public sealed class Setting : IEntity<Guid>
 {
     public Guid Id { get; private set; }
 
@@ -43,5 +44,10 @@ public sealed class Setting
     public override string ToString()
     {
         return $"{base.ToString()}, Name = {Name}, Value = {Value}, ProviderName = {ProviderName}, ProviderKey = {ProviderKey}";
+    }
+
+    public object?[] GetKeys()
+    {
+        throw new NotImplementedException();
     }
 }

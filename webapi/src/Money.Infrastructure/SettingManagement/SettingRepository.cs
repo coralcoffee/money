@@ -1,13 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Money.Domain.Repositories.EntityFrameworkCore;
 using Money.EntityFrameworkCore;
 
 namespace Money.SettingManagement;
 
-public class SettingRepository(IDbContextProvider<MoneyDbContext> dbContextProvider) : ISettingRepository
+public class SettingRepository : EfCoreRepository<MoneyDbContext, Setting, Guid>, ISettingRepository
 {
-    protected async Task<DbSet<Setting>> GetDbSetAsync()
+    public SettingRepository(IDbContextProvider<MoneyDbContext> dbContextProvider) : base(dbContextProvider)
     {
-        return (await dbContextProvider.GetDbContextAsync()).Set<Setting>();
     }
 
     public async Task<Setting?> FindAsync(
@@ -18,7 +18,7 @@ public class SettingRepository(IDbContextProvider<MoneyDbContext> dbContextProvi
     {
         return await (await GetDbSetAsync())
             .OrderBy(x => x.Id)
-            .FirstOrDefaultAsync(s => s.Name == name && s.ProviderName == providerName && s.ProviderKey == providerKey, 
+            .FirstOrDefaultAsync(s => s.Name == name && s.ProviderName == providerName && s.ProviderKey == providerKey,
                 cancellationToken);
     }
 
@@ -47,7 +47,7 @@ public class SettingRepository(IDbContextProvider<MoneyDbContext> dbContextProvi
 
     public async Task<Setting> InsertAsync(Setting setting, bool autoSave = false, CancellationToken cancellationToken = default)
     {
-        var dbContext = await dbContextProvider.GetDbContextAsync();
+        var dbContext = await GetDbContextAsync();
         await dbContext.Set<Setting>().AddAsync(setting, cancellationToken);
         await dbContext.SaveChangesAsync(cancellationToken);
         return setting;
@@ -55,14 +55,14 @@ public class SettingRepository(IDbContextProvider<MoneyDbContext> dbContextProvi
 
     public async Task UpdateAsync(Setting setting, CancellationToken cancellationToken = default)
     {
-        var dbContext = await dbContextProvider.GetDbContextAsync();
+        var dbContext = await GetDbContextAsync();
         dbContext.Set<Setting>().Update(setting);
         await dbContext.SaveChangesAsync(cancellationToken);
     }
 
     public async Task RemoveAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        var dbContext = await dbContextProvider.GetDbContextAsync();
+        var dbContext = await GetDbContextAsync();
         var entity = await dbContext.Set<Setting>().FindAsync(new object[] { id }, cancellationToken);
         if (entity != null)
         {

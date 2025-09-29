@@ -3,7 +3,7 @@ import {
   useGetSettingsQuery, 
   useUpdateSettingsMutation, 
   useUpdateBaseCurrencyMutation 
-} from '@/api/settingsApi';
+} from '@/api/apiSettings';
 import { Settings } from '@/types/settings';
 
 /**

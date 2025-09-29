@@ -1,5 +1,5 @@
-import ApiBase from './ApiBase';
+import apiBase from './ApiBase';
 
 export async function get() {
-  return ApiBase.get('/abp/api-definition');
+  return apiBase.get('/abp/api-definition');
 }

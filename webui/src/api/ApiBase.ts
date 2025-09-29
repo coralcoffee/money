@@ -10,6 +10,7 @@ function getUser() {
 
   return User.fromStorageString(oidcStorage);
 }
+
 export class ApiBase {
   private axiosInstance: AxiosInstance;
 

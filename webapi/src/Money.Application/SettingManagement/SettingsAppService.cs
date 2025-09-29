@@ -9,7 +9,7 @@ public class SettingsAppService : ISettingsAppService
         {
             Theme = "light",
             Font = "font-sans", 
-            BaseCurrency = "USD",
+            BaseCurrency = "CAD",
             OnboardingCompleted = false,
             AutoUpdateCheckEnabled = true,
             MenuBarVisible = true

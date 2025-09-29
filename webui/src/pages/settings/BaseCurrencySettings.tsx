@@ -27,6 +27,7 @@ type BaseCurrencyFormValues = z.infer<typeof baseCurrencyFormSchema>;
 
 export function BaseCurrencyForm() {
   const { settings } = useSettings();
+  console.log('Settings in BaseCurrencyForm:', settings?.baseCurrency);
   const defaultValues: Partial<BaseCurrencyFormValues> = {
     baseCurrency: settings?.baseCurrency || 'USD',
   };

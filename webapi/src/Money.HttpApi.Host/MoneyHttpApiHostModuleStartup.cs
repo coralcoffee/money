@@ -15,6 +15,17 @@ public static class MoneyHttpApiHostModuleStartup
 
         AddDatabase(services, configuration, contentRoot);
 
+        // Add CORS
+        services.AddCors(options =>
+        {
+            options.AddPolicy("AllowFrontend",
+                builder => builder
+                    .WithOrigins("http://localhost:3000", "http://localhost:3001", "https://localhost:3000", "https://localhost:3001")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials());
+        });
+
         services.AddTransient<ISettingsAppService, SettingsAppService>();
         return services;
     }

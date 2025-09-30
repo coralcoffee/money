@@ -26,6 +26,7 @@ public static class MoneyHttpApiHostModuleStartup
                     .AllowCredentials());
         });
 
+        services.AddSwaggerGen();
         services.AddTransient<ISettingsAppService, SettingsAppService>();
         return services;
     }

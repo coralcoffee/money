@@ -18,7 +18,11 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 await app.InitialApplication();
-
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 // Use CORS
 app.UseCors("AllowFrontend");
 

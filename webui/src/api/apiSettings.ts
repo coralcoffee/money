@@ -40,7 +40,7 @@ export const apiSettings = createApi({
     // Update base currency specifically
     updateBaseCurrency: builder.mutation<Settings, string>({
       query: (baseCurrency) => ({
-        url: '/settings',
+        url: '/settings/base-currency',
         method: 'PUT', 
         body: { baseCurrency },
       }),

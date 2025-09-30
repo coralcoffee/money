@@ -26,7 +26,7 @@ const baseCurrencyFormSchema = z.object({
 type BaseCurrencyFormValues = z.infer<typeof baseCurrencyFormSchema>;
 
 export function BaseCurrencyForm() {
-  const { settings } = useSettings();
+  const { settings, updateBaseCurrency } = useSettings();
   console.log('Settings in BaseCurrencyForm:', settings?.baseCurrency);
   const defaultValues: Partial<BaseCurrencyFormValues> = {
     baseCurrency: settings?.baseCurrency || 'USD',
@@ -34,13 +34,12 @@ export function BaseCurrencyForm() {
   const form = useForm<BaseCurrencyFormValues>({
     resolver: zodResolver(baseCurrencyFormSchema),
     defaultValues,
-    // Reset form when settings change from external source
     values: { baseCurrency: settings?.baseCurrency || 'USD' },
   });
 
   async function onSubmit(data: BaseCurrencyFormValues) {
     try {
-      // await updateBaseCurrency(data.baseCurrency);
+      await updateBaseCurrency(data.baseCurrency);
     } catch (error) {
       console.error('Failed to update currency settings:', error);
     }

@@ -1,18 +1,19 @@
+import { worldCurrencies } from '@/lib/currencies';
 import { forwardRef, useState } from 'react';
+import { ChevronsUpDown, Check } from 'lucide-react';
 import type { ButtonProps } from '../ui/button';
 import { Button } from '../ui/button';
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
-import { Check, ChevronsUpDown, Command } from 'lucide-react';
-import { cn } from '@/lib/utils';
 import {
+  Command,
   CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
   CommandList,
 } from '../ui/command';
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { ScrollArea } from '../ui/scroll-area';
-import { worldCurrencies } from '@/lib/currencies';
+import { cn } from '../../lib/utils';
 
 interface CurrencyInputCustomProps {
   value?: string;

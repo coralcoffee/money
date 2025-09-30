@@ -1,6 +1,7 @@
 import { Separator } from '@/components/ui/separator';
 import { SettingsHeader } from '@/layouts/AppLayout/SettingsHeader';
 import { BaseCurrencySettings } from './BaseCurrencySettings';
+import { ExchangeRatesSettings } from './ExchangeRatesSettings';
 
 export default function GeneralSettingsPage() {
   return (
@@ -11,7 +12,9 @@ export default function GeneralSettingsPage() {
       />
       <Separator />
       <BaseCurrencySettings />
-      <div className="pt-6">ExchangeRatesSettings</div>
+      <div className="pt-6">
+        <ExchangeRatesSettings />
+      </div>
       <div className="pt-6">AutoUpdateSettings</div>
     </div>
   );

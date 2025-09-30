@@ -20,7 +20,6 @@ Content-Type: application/json
 
 PUT {{Money.HttpApi.Host_HostAddress}}/api/Settings/base-currency/CAD
 Content-Type: application/json
-
 {
 
 }

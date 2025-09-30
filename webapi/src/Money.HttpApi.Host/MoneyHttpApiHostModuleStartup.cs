@@ -1,15 +1,16 @@
 ﻿using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using Money.Endpoints;
 using Money.EntityFrameworkCore;
-using System.Reflection;
 using Money.SettingManagement;
+using System.Reflection;
 
 namespace Money;
 
 public static class MoneyHttpApiHostModuleStartup
 {
-    public static IServiceCollection ConfigureServices(this IServiceCollection services, IConfiguration configuration, IHostEnvironment environment)
+    public static IServiceCollection ConfigureServices(IServiceCollection services, IConfiguration configuration, IHostEnvironment environment)
     {
         var contentRoot = environment.ContentRootPath;
 
@@ -25,8 +26,12 @@ public static class MoneyHttpApiHostModuleStartup
                     .AllowAnyHeader()
                     .AllowCredentials());
         });
-
-        services.AddSwaggerGen();
+        services.AddEndpointsApiExplorer();
+        services.AddSwaggerGen(c =>
+        {
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "Sample API", Version = "v1" });
+            c.SwaggerDoc("v2", new OpenApiInfo { Title = "Sample API", Version = "v2" });
+        });
         services.AddTransient<ISettingsAppService, SettingsAppService>();
         return services;
     }

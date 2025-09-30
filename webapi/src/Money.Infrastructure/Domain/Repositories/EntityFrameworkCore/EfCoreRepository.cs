@@ -16,16 +16,17 @@ public class EfCoreRepository<TDbContext, TEntity> :
         _dbContextProvider = dbContextProvider;
     }
 
-    public Task<DbContext> GetDbContextAsync()
+    public async Task<DbContext> GetDbContextAsync()
     {
-        throw new NotImplementedException();
+        return (await _dbContextProvider.GetDbContextAsync() as DbContext)!;
     }
 
-    public Task<DbSet<TEntity>> GetDbSetAsync()
+    public async Task<DbSet<TEntity>> GetDbSetAsync()
     {
-        throw new NotImplementedException();
+        return (await GetDbContextAsync()).Set<TEntity>();
     }
 }
+
 public class EfCoreRepository<TDbContext, TEntity, TKey> : EfCoreRepository<TDbContext, TEntity>,
     IEfCoreRepository<TEntity, TKey>
     where TDbContext : DbContext

@@ -14,7 +14,7 @@ public static class MoneyHttpApiHostModuleStartup
         var contentRoot = environment.ContentRootPath;
 
         AddDatabase(services, configuration, contentRoot);
-
+        MoneyInfrastructureModuleStartup.ConfigureServices(services);
         // Add CORS
         services.AddCors(options =>
         {

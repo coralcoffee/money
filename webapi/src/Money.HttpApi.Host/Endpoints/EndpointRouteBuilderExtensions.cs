@@ -16,7 +16,7 @@ public static class EndpointRouteBuilderExtensions
             .WithName(handler.Method.Name);
     }
 
-    public static RouteHandlerBuilder MapPut(this IEndpointRouteBuilder builder, Delegate handler, [StringSyntax("Route")] string pattern)
+    public static RouteHandlerBuilder MapPut(this IEndpointRouteBuilder builder, Delegate handler, [StringSyntax("Route")] string pattern = "")
     {
         return builder.MapPut(pattern, handler)
             .WithName(handler.Method.Name);

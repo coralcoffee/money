@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Money.Domain.Entities;
+using Money.EntityFrameworkCore;
 
 namespace Money.Domain.Repositories.EntityFrameworkCore;
 

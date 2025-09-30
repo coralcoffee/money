@@ -10,7 +10,7 @@ namespace Money;
 
 public static class MoneyHttpApiHostModuleStartup
 {
-    public static IServiceCollection ConfigureServices(IServiceCollection services, IConfiguration configuration, IHostEnvironment environment)
+    public static void ConfigureServices(IServiceCollection services, IConfiguration configuration, IHostEnvironment environment)
     {
         var contentRoot = environment.ContentRootPath;
 
@@ -26,16 +26,35 @@ public static class MoneyHttpApiHostModuleStartup
                     .AllowAnyHeader()
                     .AllowCredentials());
         });
+        services.AddTransient<ISettingsAppService, SettingsAppService>();
+        ConfigureCors(services, configuration);
+        ConfigureSwaggerServices(services, configuration);
+    }
+
+    private static void ConfigureCors(IServiceCollection services, IConfiguration configuration)
+    {
+        // Add CORS services
+        services.AddCors(options =>
+         {
+             options.AddPolicy("DevCorsPolicy", policy =>
+             {
+                 policy.WithOrigins("http://localhost:3000")
+                       .AllowAnyHeader()
+                       .AllowAnyMethod()
+                       .AllowCredentials();
+             });
+         });
+    }
+
+    private static void ConfigureSwaggerServices(IServiceCollection services, IConfiguration configuration)
+    {
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen(c =>
         {
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "Sample API", Version = "v1" });
             c.SwaggerDoc("v2", new OpenApiInfo { Title = "Sample API", Version = "v2" });
         });
-        services.AddTransient<ISettingsAppService, SettingsAppService>();
-        return services;
     }
-
     private static void AddDatabase(IServiceCollection services, IConfiguration configuration, string contentRoot)
     {
         var raw = configuration.GetConnectionString("Default")!;

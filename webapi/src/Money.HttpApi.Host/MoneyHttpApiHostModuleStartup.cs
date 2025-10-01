@@ -14,19 +14,9 @@ public static class MoneyHttpApiHostModuleStartup
     {
         var contentRoot = environment.ContentRootPath;
 
-        AddDatabase(services, configuration, contentRoot);
-        MoneyInfrastructureModuleStartup.ConfigureServices(services);
-        // Add CORS
-        services.AddCors(options =>
-        {
-            options.AddPolicy("AllowFrontend",
-                builder => builder
-                    .WithOrigins("http://localhost:3000", "http://localhost:3001", "https://localhost:3000", "https://localhost:3001")
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .AllowCredentials());
-        });
-        services.AddTransient<ISettingsAppService, SettingsAppService>();
+        MoneyInfrastructureModuleStartup.ConfigureServices(services, configuration, contentRoot);
+        MoneyApplicationModuleStartup.ConfigureServices(services);
+
         ConfigureCors(services, configuration);
         ConfigureSwaggerServices(services, configuration);
     }
@@ -51,29 +41,12 @@ public static class MoneyHttpApiHostModuleStartup
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen(c =>
         {
-            c.SwaggerDoc("v1", new OpenApiInfo { Title = "Sample API", Version = "v1" });
-            c.SwaggerDoc("v2", new OpenApiInfo { Title = "Sample API", Version = "v2" });
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "Money API", Version = "v1" });
+            c.SwaggerDoc("v2", new OpenApiInfo { Title = "Money API", Version = "v2" });
         });
     }
-    private static void AddDatabase(IServiceCollection services, IConfiguration configuration, string contentRoot)
-    {
-        var raw = configuration.GetConnectionString("Default")!;
-        var connStr = raw.Replace("{ContentRoot}", contentRoot);
 
-        var connectionStringBuilder = new SqliteConnectionStringBuilder(connStr);
-        var dbPath = connectionStringBuilder.DataSource;
-        var dbDirectory = Path.GetDirectoryName(dbPath);
-        if (!string.IsNullOrEmpty(dbDirectory) && !Directory.Exists(dbDirectory))
-        {
-            Directory.CreateDirectory(dbDirectory);
-        }
-
-        services.AddDbContext<MoneyDbContext>(
-            opt => opt.UseSqlite(connStr, x => x.UseQuerySplittingBehavior(QuerySplittingBehavior.SingleQuery))
-        );
-    }
-
-    public static async Task InitialApplication(this WebApplication app)
+    public static async Task InitializeApplicationAsync(this WebApplication app)
     {
         await using var scope = app.Services.CreateAsyncScope();
         var db = scope.ServiceProvider.GetRequiredService<MoneyDbContext>();
@@ -81,6 +54,23 @@ public static class MoneyHttpApiHostModuleStartup
 
         await db.Database.ExecuteSqlRawAsync("PRAGMA journal_mode=WAL;");
         await db.Database.ExecuteSqlRawAsync("PRAGMA foreign_keys=ON;");
+    }
+
+    public static void OnApplicationInitialization(this WebApplication app)
+    {
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI(ui =>
+            {
+                ui.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+                ui.SwaggerEndpoint("/swagger/v2/swagger.json", "v2");
+                ui.RoutePrefix = "docs";
+            });
+        }
+
+        app.UseCors("AllowFrontend");
+        app.MapEndpoints();
     }
 
     private static RouteGroupBuilder MapGroup(this WebApplication app, EndpointGroupBase group)
@@ -95,6 +85,20 @@ public static class MoneyHttpApiHostModuleStartup
 
     public static WebApplication MapEndpoints(this WebApplication app)
     {
+        var api = app.MapGroup("/api").WithOpenApi();
+
+        var v1 = api.MapGroup("/v1").WithTags("v1");
+
+        var settingsEndpoints = v1.MapGroup("/settings")
+                              .WithTags("Settings")
+                              .WithGroupName("v1");
+
+        settingsEndpoints.MapGet("/", async (ISettingsAppService appService) => TypedResults.Ok(await appService.GetAsync()))
+                         .WithName("GetSettings")
+                         .WithSummary("Get application settings")
+                         .Produces<SettingsDto>(StatusCodes.Status200OK)
+                         .WithOpenApi();
+
         var endpointGroupType = typeof(EndpointGroupBase);
 
         var assembly = Assembly.GetExecutingAssembly();

@@ -4,10 +4,19 @@ using Money.SettingManagement;
 
 namespace Money.Endpoints;
 
-public class Settings : EndpointGroupBase
+public class SettingsEndpoints : EndpointGroupBase
 {
     public override void Map(RouteGroupBuilder groupBuilder)
     {
+        var settingsEndpoints = groupBuilder.MapGroup("/settings")
+                              .WithTags("Settings")
+                              .WithGroupName("v1");
+
+        settingsEndpoints.MapGet("/", async (ISettingsAppService appService) => TypedResults.Ok(await appService.GetAsync()))
+                         .WithName("GetSettings")
+                         .WithSummary("Get application settings")
+                         .Produces<SettingsDto>(StatusCodes.Status200OK)
+                         .WithOpenApi();
         groupBuilder.MapGet(GetAsync);
         groupBuilder.MapPut(UpdateAsync, "base-currency/{baseCurrency}"); 
     }

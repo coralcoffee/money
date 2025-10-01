@@ -1,10 +1,7 @@
-﻿using Microsoft.Data.Sqlite;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Money.Endpoints;
 using Money.EntityFrameworkCore;
-using Money.SettingManagement;
-using System.Reflection;
 
 namespace Money;
 
@@ -73,47 +70,37 @@ public static class MoneyHttpApiHostModuleStartup
         app.MapEndpoints();
     }
 
-    private static RouteGroupBuilder MapGroup(this WebApplication app, EndpointGroupBase group)
+    private static WebApplication MapEndpoints(this WebApplication app)
     {
-        var groupName = group.GroupName ?? group.GetType().Name;
+        var api = app
+            .MapGroup("/api")
+            .MapGroup("/v1")
+            .WithOpenApi();
 
-        return app
-            .MapGroup($"/api/{groupName}")
-            .WithGroupName(groupName)
-            .WithTags(groupName);
-    }
-
-    public static WebApplication MapEndpoints(this WebApplication app)
-    {
-        var api = app.MapGroup("/api").WithOpenApi();
-
-        var v1 = api.MapGroup("/v1").WithTags("v1");
-
-        var settingsEndpoints = v1.MapGroup("/settings")
-                              .WithTags("Settings")
-                              .WithGroupName("v1");
-
-        settingsEndpoints.MapGet("/", async (ISettingsAppService appService) => TypedResults.Ok(await appService.GetAsync()))
-                         .WithName("GetSettings")
-                         .WithSummary("Get application settings")
-                         .Produces<SettingsDto>(StatusCodes.Status200OK)
-                         .WithOpenApi();
-
-        var endpointGroupType = typeof(EndpointGroupBase);
-
-        var assembly = Assembly.GetExecutingAssembly();
-
-        var endpointGroupTypes = assembly.GetExportedTypes()
-            .Where(t => t.IsSubclassOf(endpointGroupType));
-
-        foreach (var type in endpointGroupTypes)
+        var endPointsFactories = new Dictionary<Type, Func<EndpointGroupBase>>
         {
-            if (Activator.CreateInstance(type) is EndpointGroupBase instance)
-            {
-                instance.Map(app.MapGroup(instance));
-            }
+            { typeof(SettingsEndpoints), () => new SettingsEndpoints()},
+        };
+
+        foreach (var factory in endPointsFactories)
+        {
+            var instance = factory.Value();
+            if (instance != null)
+                api.AddEndPoints(instance);
         }
 
         return app;
+    }
+
+    private static void AddEndPoints(this RouteGroupBuilder routeGroupBuilder, EndpointGroupBase endpointGroup, string version = "v1")
+    {
+        var groupName = endpointGroup.GroupName;
+
+        var routeGroup = routeGroupBuilder
+            .MapGroup($"/{groupName.ToLower()}")
+            .WithGroupName(version)
+            .WithTags(groupName);
+
+        endpointGroup.Map(routeGroup);
     }
 }

@@ -1,24 +1,11 @@
 ﻿@Money.HttpApi.Host_HostAddress = https://localhost:5001
 
-GET {{Money.HttpApi.Host_HostAddress}}/
-
-###
-
-GET {{Money.HttpApi.Host_HostAddress}}/api/Settings
-
-###
-
-PUT {{Money.HttpApi.Host_HostAddress}}/api/Settings
-Content-Type: application/json
-
-{
-  //SettingsDto
-}
+GET {{Money.HttpApi.Host_HostAddress}}/api/v1/Settings
 
 ###
 
 
-PUT {{Money.HttpApi.Host_HostAddress}}/api/Settings/base-currency/CAD
+PUT {{Money.HttpApi.Host_HostAddress}}/api/v1/Settings/base-currency/CAD
 Content-Type: application/json
 {
 

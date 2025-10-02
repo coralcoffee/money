@@ -6,8 +6,8 @@ public interface ISettingRepository : IBasicRepository<Setting, Guid>
 {
     Task<Setting?> FindAsync(
         string name,
-        string? providerName,
-        string? providerKey,
+        string? providerName = null,
+        string? providerKey = null,
         CancellationToken cancellationToken = default);
 
     Task<List<Setting>> GetListAsync(

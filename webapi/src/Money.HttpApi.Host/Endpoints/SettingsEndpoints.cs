@@ -18,11 +18,9 @@ public class SettingsEndpoints : EndpointGroupBase
         return TypedResults.Ok(await appService.GetAsync());
     }
 
-    public async Task<Ok<SettingsDto>> UpdateBaseCurrencyAsync(ISettingsAppService appService, string baseCurrency)
+    public async Task<IResult> UpdateBaseCurrencyAsync(ISettingsAppService appService, string baseCurrency)
     {
-        var dto = new SettingsDto();
-        dto.BaseCurrency = baseCurrency;
-        await appService.UpdateAsync(dto);
-        return TypedResults.Ok(dto);
+        await appService.UpdateBaseCurrencyAsync(baseCurrency);
+        return TypedResults.Ok();
     }
 }

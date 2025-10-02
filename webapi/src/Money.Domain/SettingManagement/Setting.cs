@@ -11,7 +11,7 @@ public sealed class Setting : IEntity<Guid>
     public string Name { get; private set; } = null!;
 
     [NotNull]
-    public string Value { get; private set; } = null!;
+    public string Value { get; set; } = null!;
 
     [CanBeNull]
     public string? ProviderName { get; private set; }
@@ -48,6 +48,6 @@ public sealed class Setting : IEntity<Guid>
 
     public object?[] GetKeys()
     {
-        throw new NotImplementedException();
+        return [Id];
     }
 }

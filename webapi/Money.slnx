@@ -1,0 +1,23 @@
+<Solution>
+    <Configurations>
+        <Platform Name="Any CPU" />
+    </Configurations>
+    <Folder Name="/src/">
+        <Project Path="src/Money.Domain/Money.Domain.csproj" />
+        <Project Path="src/Money.Application/Money.Application.csproj" />
+        <Project Path="src/Money.EntityFrameworkCore/Money.EntityFrameworkCore.csproj" />
+        <Project Path="src/Money.Domain.Shared/Money.Domain.Shared.csproj" />
+        <Project Path="src/Money.Application.Contracts/Money.Application.Contracts.csproj" />
+        <Project Path="src/Money.HttpApi/Money.HttpApi.csproj" />
+        <Project Path="src/Money.HttpApi.Client/Money.HttpApi.Client.csproj" />
+        <Project Path="src/Money.DbMigrator/Money.DbMigrator.csproj" />
+        <Project Path="src/Money.HttpApi.Host/Money.HttpApi.Host.csproj" />
+    </Folder>
+    <Folder Name="/test/">
+        <Project Path="test/Money.Application.Tests/Money.Application.Tests.csproj" />
+        <Project Path="test/Money.EntityFrameworkCore.Tests/Money.EntityFrameworkCore.Tests.csproj" />
+        <Project Path="test/Money.TestBase/Money.TestBase.csproj" />
+        <Project Path="test/Money.Domain.Tests/Money.Domain.Tests.csproj" />
+        <Project Path="test/Money.HttpApi.Client.ConsoleTestApp/Money.HttpApi.Client.ConsoleTestApp.csproj" />
+    </Folder>
+</Solution>

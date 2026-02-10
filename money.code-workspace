@@ -1,0 +1,105 @@
+{
+  "folders": [
+    {
+      "name": "root",
+      "path": "."
+    },
+    {
+      "name": "webapi",
+      "path": "webapi"
+    },
+    {
+      "name": "webui",
+      "path": "webui"
+    },
+    {
+      "name": "desktop",
+      "path": "desktop"
+    }
+  ],
+  "settings": {
+    "FSharp.suggestGitignore": false,
+    "files.exclude": {
+      "**/.vs": true,
+      "**/bin": true,
+      "**/obj": true
+    },
+    "search.exclude": {
+      "**/dist": true,
+      "**/release": true
+    },
+    "typescript.tsdk": "node_modules/typescript/lib"
+  },
+  "extensions": {
+    "recommendations": [
+      "ms-dotnettools.csharp",
+      "dbaeumer.vscode-eslint"
+    ]
+  },
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "WebAPI - Launch (.NET)",
+        "type": "coreclr",
+        "request": "launch",
+        "preLaunchTask": "webapi: build",
+        "program": "${workspaceFolder:webapi}/src/Money.HttpApi.Host/bin/Debug/net9.0/Money.HttpApi.Host.dll",
+        "args": [],
+        "cwd": "${workspaceFolder:webapi}/src/Money.HttpApi.Host",
+        "env": {
+          "ASPNETCORE_ENVIRONMENT": "Development"
+        },
+        "serverReadyAction": {
+          "action": "openExternally",
+          "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+        }
+      },
+      {
+        "name": "WebUI: Chrome",
+        "type": "pwa-chrome",
+        "request": "launch",
+        "url": "http://127.0.0.1:3000",
+        "webRoot": "${workspaceFolder:webui}"
+      },
+      {
+        "name": "WebUI: Dev Server",
+        "type": "node-terminal",
+        "request": "launch",
+        "command": "Set-Location \"${workspaceFolder:root}\"; npm run dev:webui"
+      },
+      {
+        "name": "Desktop: Electron Dev",
+        "type": "node-terminal",
+        "request": "launch",
+        "command": "Set-Location \"${workspaceFolder:root}\"; npm run start"
+      }
+    ],
+    "compounds": [
+      {
+        "name": "Full Stack: API + WebUI",
+        "configurations": [
+          "WebAPI - Launch (.NET)",
+          "WebUI: Chrome"
+        ],
+        "stopAll": true
+      }
+    ]
+  },
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "webapi: build",
+        "type": "process",
+        "command": "dotnet",
+        "args": [
+          "build",
+          "${workspaceFolder:webapi}/src/Money.HttpApi.Host/Money.HttpApi.Host.csproj"
+        ],
+        "problemMatcher": "$msCompile",
+        "group": "build"
+      }
+    ]
+  }
+}

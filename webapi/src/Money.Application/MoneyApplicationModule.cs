@@ -6,6 +6,9 @@ using Volo.Abp.Mapperly;
 using Volo.Abp.FeatureManagement;
 using Volo.Abp.Modularity;
 using Microsoft.Extensions.DependencyInjection;
+using Money.Analytics;
+using Money.MarketData;
+using Money.Positions;
 using Volo.Abp.TenantManagement;
 
 namespace Money;
@@ -22,5 +25,12 @@ namespace Money;
     )]
 public class MoneyApplicationModule : AbpModule
 {
-
+    public override void ConfigureServices(ServiceConfigurationContext context)
+    {
+        context.Services.AddTransient<FifoMatcher>();
+        context.Services.AddTransient<PnlCalculator>();
+        context.Services.AddSingleton<MarketDataRefreshState>();
+        context.Services.AddTransient<MarketDataRefreshJob>();
+        context.Services.AddTransient<IMarketDataClient, YahooFinanceClient>();
+    }
 }

@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Extensions.DependencyInjection;
 using OpenIddict.Validation.AspNetCore;
 using OpenIddict.Server.AspNetCore;
 using Money.EntityFrameworkCore;
+using Money.MarketData;
 using Money.MultiTenancy;
 using Money.HealthChecks;
 using Microsoft.OpenApi.Models;
@@ -121,6 +122,7 @@ public class MoneyHttpApiHostModule : AbpModule
         ConfigureSwagger(context, configuration);
         ConfigureVirtualFileSystem(context);
         ConfigureCors(context, configuration);
+        context.Services.AddHttpClient("yahoo-finance");
     }
 
     private void ConfigureStudio(IHostEnvironment hostingEnvironment)

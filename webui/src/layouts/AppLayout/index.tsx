@@ -8,23 +8,18 @@ const staticNavigation: NavigationProps = {
   primary: [
     {
       icon: <Icons.Dashboard className="h-5 w-5" />,
-      title: 'Dashboard',
-      href: '/dashboard',
+      title: 'Analytics',
+      href: '/analytics',
+    },
+    {
+      icon: <Icons.Wallet className="h-5 w-5" />,
+      title: 'Accounts',
+      href: '/accounts',
     },
     {
       icon: <Icons.Holdings className="h-5 w-5" />,
       title: 'Holdings',
       href: '/holdings',
-    },
-    {
-      icon: <Icons.Performance className="h-5 w-5" />,
-      title: 'Performance',
-      href: '/performance',
-    },
-    {
-      icon: <Icons.Income className="h-5 w-5" />,
-      title: 'Income',
-      href: '/income',
     },
     {
       icon: <Icons.Activity className="h-5 w-5" />,
